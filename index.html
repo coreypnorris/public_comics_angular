@@ -3,6 +3,7 @@
     <title>Public Comics</title>
     <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.10/angular.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.2/slate/bootstrap.min.css">
@@ -29,8 +30,21 @@
     </div>
 </nav>
 
-<div ng-repeat="post in posts | orderBy: '-upvotes'">
-    {{post.title}} - upvotes: {{post.upvotes}}
-</div>
+<ui-view></ui-view>
+
+<script type="text/ng-template" id="/home.html">
+    <h1>Public Comics</h1>
+
+    <form ng-submit="addUser()">
+        <input type="text" ng-model="username">
+        <input type="text" ng-model="email">
+        <button type="submit">Sign Up</button>
+    </form>
+</script>
+
+<script type="text/ng-template" id="/user.html">
+    <h2>{{user.username}}</h2>
+    <p>{{user.email}}</p>
+</script>
 </body>
 </html>
