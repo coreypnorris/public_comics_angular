@@ -2,6 +2,12 @@ var mongoose = require('mongoose');
 require('./models/Users');
 mongoose.connect('mongodb://localhost/news');
 
+var UserApp = require("userapp");
+
+UserApp.initialize({
+    appId: "54efe6a678b46"
+});
+
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
