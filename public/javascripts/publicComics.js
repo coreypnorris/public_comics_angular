@@ -1,25 +1,20 @@
-var app = angular.module('publicComics', ['ui.router', 'UserApp']);
-
-app.run(function(user) {
-    user.init({ appId: '54efe6a678b46' });
-});
+var app = angular.module('publicComics', ['ui.router']);
 
 app.config([
 '$stateProvider',
 '$urlRouterProvider',
-'UserApp',
-function($stateProvider, $urlRouterProvider, UserApp) {
+function($stateProvider, $urlRouterProvider) {
 
     $stateProvider
         .state('home', {
             url: '/home',
             templateUrl: '/home.html',
-            controller: 'MainCtrl'
+            controller: 'MainController'
         })
 
         .state('signup', {
             url: '/signup',
-            templateUrl: 'partials/signup.html',
+            templateUrl: '/signup.html',
             data: {
                 public: true
             }
@@ -27,7 +22,7 @@ function($stateProvider, $urlRouterProvider, UserApp) {
 
         .state('login', {
             url: '/login',
-            templateUrl: 'partials/login.html',
+            templateUrl: '/login.html',
             data: {
                 login: true
             }

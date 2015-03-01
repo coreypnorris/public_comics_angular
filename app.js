@@ -2,10 +2,12 @@ var mongoose = require('mongoose');
 require('./models/Users');
 mongoose.connect('mongodb://localhost/news');
 
+var env = require('./env.json');
+
 var UserApp = require("userapp");
 
 UserApp.initialize({
-    appId: "54efe6a678b46"
+    appId: process.env.userAppId
 });
 
 var express = require('express');

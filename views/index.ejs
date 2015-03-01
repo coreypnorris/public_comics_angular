@@ -1,18 +1,18 @@
 <html xmlns="http://www.w3.org/1999/html">
 <head>
     <title>Public Comics</title>
-    <script src="https://app.userapp.io/js/userapp.client.js"></script>
-    <script src="https://app.userapp.io/js/angularjs.userapp.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.10/angular.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
+    <script src="https://app.userapp.io/js/userapp.client.js"></script>
+    <script src="https://app.userapp.io/js/angularjs.userapp.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.2/slate/bootstrap.min.css">
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <script src="/javascripts/publicComics.js"></script>
 </head>
-<body ng-app="publicComics" ng-controller="MainCtrl">
+<body ng-app="publicComics">
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -22,7 +22,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">Public Comics</a>
+            <a class="navbar-brand" href="/#/home">Public Comics</a>
         </div>
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -48,6 +48,10 @@
         <p><a href="#/login">Log in</a></p>
     </div>
 </script>
+
+<% include ../views/partials/signup.ejs %>
+
+<% include ../views/partials/login.ejs %>
 
 </body>
 </html>

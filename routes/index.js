@@ -8,30 +8,4 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-router.param('user', function(req, res, next, id) {
-    var query = User.findById(id);
-
-    query.exec(function (err, user){
-        if (err) { return next(err); }
-        if (!user) { return next(new Error('can\'t find user')); }
-
-        req.user = user;
-        return next();
-    });
-});
-
-router.post('/users', function(req, res, next) {
-    var user = new User(req.body);
-
-    user.save(function(err, user){
-        if(err){ return next(err); }
-
-        res.json(user);
-    });
-});
-
-router.get('/users/:user', function(req, res) {
-    res.json(req.user);
-});
-
 module.exports = router;
