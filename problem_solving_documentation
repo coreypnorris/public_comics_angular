@@ -1,0 +1,140 @@
+Problem Solving Documentation
+
+Brand new project
+--
+
+* Install Node.js
+* run npm install -g yo
+* run npm install -g generator-webapp
+* create the dir for your app and cd into it
+* run yo
+* select webapp from the menu and hit enter
+* add bootstrap and sass if you want
+* run `grunt serve` to start the server
+* add the Live Reloader chrome extension to your Chrome browser
+* add `"predef": ["angular"]` to your .jshintrc file
+* run `bower install jquery -S` to add jquery to the bower file
+* add the file in the index.html view
+  <script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
+* run `grunt build` to create a dist file with your website for distribution
+* see what other grunt tasks you can run in the Gruntfile.js
+
+Add Angular to an app
+--
+* Install angular, jquery,
+* add ng-app="app" to the container div in your index.html file
+* create a <div ui-view></div> tag inside the app for which ever view is loaded
+* create a js file called scripts/main.js and include it in the index.html file
+* in main.js add the following code. Your dependencies go in the empty array
+angular
+  .module('app', [
+
+  ]);
+
+Add a partial template in Angular app
+--
+* create a partial in the templates folder. For example: templates/nav.html
+* add it to the index.html page like this
+  <header ng-include="'templates/nav.html'"></header>
+
+Adding a simple routes in Angular
+--
+* Install ui-router
+* add the following dependencies to the app in the main.js file
+angular
+  .module('app', [
+    'ui.router'
+  ])
+  .config(['$urlRouterProvider', '$stateProvider', function($urlRouterProvider, $stateProvider) {
+
+  }]);
+
+* add the default route
+angular
+  .module('app', [
+    'ui.router'
+  ])
+  .config(['$urlRouterProvider', '$stateProvider', function($urlRouterProvider, $stateProvider) {
+    $urlRouterProvider.otherwise('/');
+  }])
+
+* add some states
+angular
+  .module('app', [
+    'ui.router'
+  ])
+  .config(['$urlRouterProvider', '$stateProvider', function($urlRouterProvider, $stateProvider) {
+    $urlRouterProvider.otherwise('/');
+
+    $stateProvider
+      .state('home', {
+        url: '/',
+        templateUrl: 'templates/home.html'
+      })
+      .state('about', {
+        url: '/about',
+        templateUrl: 'templates/about.html'
+      });
+  }]);
+
+* Add the home.html and about.html template files
+
+Adding controller logic
+--
+* Create a controllers folder in app/scripts/controllers
+* Create a home controller file in app/scripts/controllers/homeCtrl.js
+* Add the logic in the homeCtrl.js file
+angular
+  .module('app')
+  .controller('homeCtrl', ['$scope', function($scope) {
+    $scope.title = 'Home';
+    $scope.items = ['item1', 'item2', 'item3'];
+  }]);
+
+* Add the controller file to the index.html file
+<script src="scripts/main.js"></script>
+<script src="scripts/controllers/homeCtrl.js"></script>
+
+* Add the home controller to the home state
+angular
+  .module('app', [
+    'ui.router'
+  ])
+  .config(['$urlRouterProvider', '$stateProvider', function($urlRouterProvider, $stateProvider) {
+    $urlRouterProvider.otherwise('/');
+
+    $stateProvider
+      .state('home', {
+        url: '/',
+        templateUrl: 'templates/home.html',
+        controller: 'homeCtrl'
+      })
+      .state('about', {
+        url: '/about',
+        templateUrl: 'templates/about.html'
+      });
+  }]);
+
+* Add the variables to the templates/home file
+<h1>{{title}}</h1>
+<ul>
+  <li ng-repeat="item in items">{{item}}</li>
+</ul>
+
+
+Features Roadmap
+--
+About Page
+Authentication
+Uploading comics
+Displaying comics
+Reading comics
+
+
+
+Adding a new page in an angular app
+--
+
+* create the state to handle the route
+* create the template to render the html
+* create the controller to handle the logic
