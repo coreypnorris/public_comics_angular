@@ -2,7 +2,13 @@ Problem Solving Documentation
 
 Brand new project
 --
+* Run `express --ejs name_of_your_app` to create the app foundation
+* Add Mongoose with `npm install --save mongoose`
+* Run `npm install` to install the package.json dependencies
 
+
+Brand new project
+--
 * Install Node.js
 * run npm install -g yo
 * run npm install -g generator-webapp
