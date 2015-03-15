@@ -11,8 +11,13 @@
     "debug": "~2.1.1",
     "ejs": "~2.3.1",
     "express": "~4.12.2",
-    "mongoose": "^3.8.24",
     "morgan": "~1.5.1",
     "serve-favicon": "~2.2.0"
+  },
+  "devDependencies": {
+    "gulp": "^3.8.11",
+    "gulp-livereload": "^3.8.0",
+    "gulp-ruby-sass": "^1.0.0-alpha.3",
+    "gulp-shell": "^0.4.0"
   }
 }
