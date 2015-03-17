@@ -1,4 +1,3 @@
-// Add the Gulp node packages
 var gulp = require('gulp');
 var sass = require('gulp-ruby-sass');
 var shell = require('gulp-shell');
@@ -19,9 +18,14 @@ gulp.task('watch', ['npmInstall', 'compileSass'], function() {
   gulp.watch('./public/sass/sass.scss', ['compileSass']);
 });
 
-gulp.task('start', ['npmInstall', 'compileSass', 'watch'], shell.task([
+gulp.task('copyBowerComponents', ['npmInstall', 'compileSass', 'watch'], function () {
+  gulp.src('./bower_components/**')
+    .pipe(gulp.dest('./public/bower_components'));
+});
+
+gulp.task('start', ['npmInstall', 'compileSass', 'watch', 'copyBowerComponents'], shell.task([
   'npm install',
   'node ./bin/www'
 ]));
 
-gulp.task('default', ['compileSass', 'watch', 'start']);
+gulp.task('default', ['compileSass', 'watch', 'copyBowerComponents', 'start']);

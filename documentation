@@ -2,24 +2,63 @@ Problem Solving Documentation
 
 Brand new project
 --
-* Create a file in the root directory called server.js and add the following code:
-var http = require('http');
+* Run `npm init` to create the package.json file. When it asks you for a entry point, enter server.js instead of default index.js.
+* Install express and morgan with `npm install express morgan --save`
+* Create a file named server.js and copy/paste the following content in it:
 var port = 3000;
+var express = require('./config/express');
+var app = express();
+app.listen(port);
+module.exports = app;
+console.log('Server running at http://localhost:' + port);
 
-http.createServer(function(req, res) {
-      res.writeHead(200, {
-            'Content-Type': 'text/plain'
-      });
+* Run the following command to create the basic express MVC folders:
+`mkdir app && cd app && mkdir controllers && mkdir models && mkdir routes && mkdir views && cd .. && mkdir config && cd config && mkdir env && cd .. && mkdir public && cd public && mkdir css && mkdir img && mkdir js && cd ..`
 
-      res.end("Hello Mitnick, you've just stumbled on the simplest web server ever");
-}).listen(port);
+* Install ejs with `npm install ejs --save`
+* Create a file named express.js in the config folder and add the following code:
+var express = require('express');
+var logger = require('morgan');
+module.exports = function() {
+  var app = express();
+  app.set('views', './app/views');
+  app.set('view engine', 'ejs');
+  require('../app/routes/index.server.routes.js')(app);
+  app.use(express.static('./public'));
 
-console.log('Our awesome web server running at http://localhost:'+ port);
+  app.use(logger('dev'));
 
-Brand new project
---
-* Run `express --ejs name_of_your_app` to create the app foundation
+  // Handle 404
+  app.use(function(req, res, next) {
+      res.status(404).sendfile('./error/404.html');
+  });
 
+  return app;
+};
+
+* Create a file callex index.server.controller.js in the app/controllers folder and add the following code:
+exports.render = function(req, res) {
+    res.render('index', {
+        title: 'Howdy World'
+    })
+};
+
+* Create a file callex index.server.routes.js in the app/routes folder and add the following code:
+module.exports = function(app) {
+    var index = require('../controllers/index.server.controller');
+    app.get('/', index.render);
+};
+
+* Create a file callex index.ejs in the app/views folder and add the following code:
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= title %></title>
+</head>
+<body>
+  <h1><%= title %></h1>
+</body>
+</html>
 
 Add Angular, Jquery, Normalize, Bootstrap, and Fontawesome with Bower
 --
