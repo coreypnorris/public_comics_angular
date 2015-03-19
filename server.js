@@ -4,7 +4,7 @@ var config = require('./config/config'),
   mongoose = require('./config/mongoose'),
   express = require('./config/express'),
 
-var db = mongoose(),
+  db = mongoose(),
   app = express();
 
 app.listen(config.port);
