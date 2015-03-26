@@ -112,7 +112,7 @@ Creating a new Mongoose model
 
 * To create a new model schema, create a new file named user.server.model.js in the app/models folder and paste the following code:
 var mongoose = require('mongoose'),
-  Schema = mongoose.Schema;
+var Schema = mongoose.Schema;
 
 var UserSchema = new Schema({
   name: String,
@@ -174,6 +174,36 @@ exports.read = function(req, res) {
 * Now add the following to app/routes/users.server.routes.js:
 app.route('/users/:userId').get(users.read);
 app.param('userId', users.userByID);
+
+* In your app/controllers/users.server.controller.js file add a new update() method:
+exports.update = function(req, res, next) {
+  User.findByIdAndUpdate(req.user.id, req.body, function(err, user) {
+    if (err) {
+      return next(err);
+    }
+    else {
+      res.json(user);
+    }
+  });
+};
+
+* * Now add the following to app/routes/users.server.routes.js:
+app.route('/users/:userId').get(users.read).put(users.update);
+
+* In your app/controllers/users.server.controller.js file add a new delete() method:
+exports.delete = function(req, res, next) {
+  req.user.remove(function(err) {
+    if (err) {
+      return next(err);
+    }
+    else {
+      res.json(req.user);
+    }
+  })
+};
+
+* Now, in app/routes/users.server.routes.js file change the route with the userId parameter to be like this:
+app.route('/users/:userId').get(users.read).put(users.update).delete(users.delete);
 
 Using MongoDB via console
 --
