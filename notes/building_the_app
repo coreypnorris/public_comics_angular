@@ -1,0 +1,105 @@
+- Run ``
+
+- In the x file add the following code:
+```javascript
+
+```
+
+
+Build a basic CRUD app with a User model and authentication in MEAN
+=====
+
+Create the following folders & files:
+-----
+- ./server.js
+- ./app/controllers/
+- ./app/controllers/index.server.controller.js
+- ./app/models/
+- ./app/routes/
+- ./app/routes/index.server.routes.js
+- ./app/views/
+- ./app/views/index.ejs
+- ./config/env/
+- ./config/express.js
+- ./public/css/
+- ./public/img/
+- ./public/js/
+- `touch server.js && mkdir app && cd app && mkdir controllers && mkdir models && mkdir routes && mkdir views && cd .. && mkdir config && cd config && mkdir env && cd .. && mkdir public && cd public && mkdir css && mkdir img && mkdir js && cd ..`
+- `touch ./server.js ./app/controllers/ ./app/controllers/index.server.controller.js ./app/models/ ./app/routes/ ./app/routes/index.server.routes.js ./app/views/ ./app/views/index.ejs ./config/env/ ./config/express.js ./public/css/ ./public/img/ ./public/js/`
+
+___
+
+
+Instructions:
+-----
+- Run `npm init` to create the package.json file. When it asks for an entry point, enter server.js instead of index.js.
+
+- Run `npm install connect ejs express --save`
+
+- In the server.js file add the following code:
+```javascript
+var port = 3000;
+var express = require('./config/express');
+var app = express();
+app.listen(port);
+module.exports = app;
+console.log('Server running at http://localhost:' + port);
+```
+
+- In the index.server.controller.js file add the following code:
+```javascript
+exports.render = function(req, res) {
+  res.render('index', {
+    title: 'Howdy World'
+  })
+};
+```
+
+- In the index.server.routes.js file add the following code:
+```javascript
+module.exports = function(app) {
+  var index = require('../controllers/index.server.controller');
+  app.get('/', index.render);
+};
+```
+
+- In the config/express.js file add the following code:
+```javascript
+var express = require('express');
+module.exports = function() {
+  var app = express();
+  app.set('views', './app/views');
+  app.set('view engine', 'ejs');
+  require('../app/routes/index.server.routes.js')(app);
+  app.use(express.static('./public'));
+  return app;
+};
+
+```
+
+- In the app/views/index.ejs file add the following code:
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+</head>
+
+<body>
+    <h1><%= title %></h1>
+</body>
+</html>
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
