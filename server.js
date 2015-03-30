@@ -1,6 +1,12 @@
-var port = 3000;
-var express = require('./config/express');
-var app = express();
-app.listen(port);
+process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+
+var config = require('./config/config'),
+  mongoose = require('./config/mongoose'),
+  express = require('./config/express'),
+  db = mongoose(),
+  app = express();
+
+app.listen(config.port);
+
 module.exports = app;
-console.log('Server running at http://localhost:' + port);
+console.log(process.env.NODE_ENV  + ' server running at http://localhost:' + config.port);

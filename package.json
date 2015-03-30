@@ -17,8 +17,10 @@
   },
   "homepage": "https://github.com/coreypnorris/public_comics_angular",
   "dependencies": {
+    "body-parser": "^1.12.2",
     "connect": "^3.3.5",
     "ejs": "^2.3.1",
-    "express": "^4.12.3"
+    "express": "^4.12.3",
+    "mongoose": "^4.0.1"
   }
 }

@@ -1,11 +1,3 @@
-- Run ``
-
-- In the x file add the following code:
-```javascript
-
-```
-
-
 Build a basic CRUD app with a User model and authentication in MEAN
 =====
 
@@ -14,12 +6,18 @@ Create the following folders & files:
 - ./server.js
 - ./app/controllers/
 - ./app/controllers/index.server.controller.js
+- ./app/controllers/users.server.controller.js
 - ./app/models/
+- ./app/models/user.server.model.js
 - ./app/routes/
 - ./app/routes/index.server.routes.js
+- ./app/routes/users.server.routes.js
 - ./app/views/
 - ./app/views/index.ejs
+- ./config/config.js
+- ./config/mongoose.js
 - ./config/env/
+- ./config/env/development.js
 - ./config/express.js
 - ./public/css/
 - ./public/img/
@@ -34,16 +32,22 @@ Instructions:
 -----
 - Run `npm init` to create the package.json file. When it asks for an entry point, enter server.js instead of index.js.
 
-- Run `npm install connect ejs express --save`
+- Run `npm install connect ejs express mongoose body-parser --save`
 
 - In the server.js file add the following code:
 ```javascript
-var port = 3000;
-var express = require('./config/express');
-var app = express();
-app.listen(port);
+process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+
+var config = require('./config/config'),
+  mongoose = require('./config/mongoose'),
+  express = require('./config/express'),
+  db = mongoose(),
+  app = express();
+
+app.listen(config.port);
+
 module.exports = app;
-console.log('Server running at http://localhost:' + port);
+console.log(process.env.NODE_ENV  + ' server running at http://localhost:' + config.port);
 ```
 
 - In the index.server.controller.js file add the following code:
@@ -65,16 +69,29 @@ module.exports = function(app) {
 
 - In the config/express.js file add the following code:
 ```javascript
-var express = require('express');
+var config = require('./config'),
+  express = require('express'),
+  bodyParser = require('body-parser');
+
 module.exports = function() {
   var app = express();
+
+  app.use(bodyParser.urlencoded({
+    extended: true
+  }));
+
+  app.use(bodyParser.json());
+
   app.set('views', './app/views');
   app.set('view engine', 'ejs');
+
   require('../app/routes/index.server.routes.js')(app);
+  require('../app/routes/users.server.routes.js')(app);
+
   app.use(express.static('./public'));
+
   return app;
 };
-
 ```
 
 - In the app/views/index.ejs file add the following code:
@@ -91,13 +108,166 @@ module.exports = function() {
 </html>
 ```
 
+- In the config/env/development.js file add the following code:
+```javascript
+var port = 1337;
+
+module.exports = {
+  port: port,
+  db: 'mongodb://localhost/your_database_name'
+};
+```
+
+- In the config/mongoose.js file add the following code:
+```javascript
+var config = require('./config'),
+  mongoose = require('mongoose');
+
+module.exports = function() {
+  var db = mongoose.connect(config.db);
+  require('../app/models/user.server.model');
+  return db;
+};
+```
+
+- In the config/config.js file add the following code:
+```javascript
+module.exports = require('./env/' + process.env.NODE_ENV + '.js');
+```
+
+- Run `export NODE_ENV=development`
+
+- In the models/user.server.model.js file add the following code:
+```javascript
+var mongoose = require('mongoose'),
+  Schema = mongoose.Schema;
+
+var UserSchema = new Schema({
+  name: String,
+  email: String,
+  username: String,
+  password: String,
+});
+
+mongoose.model('User', UserSchema);
+```
+
+- In the ./app/controllers/users.server.controller.js file add the following code:
+```javascript
+var User = require('mongoose').model('User');
+
+exports.create = function(req, res, next) {
+  var user = new User(req.body);
+  user.save(function(err) {
+    if (err) {
+      return next(err);
+    }
+    else {
+      res.json(user);
+    }
+  });
+};
+
+exports.list = function(req, res, next) {
+  User.find({}, function(err, users) {
+    if (err) {
+      return next(err);
+    }
+    else {
+      res.json(users);
+    }
+  });
+};
+
+exports.read = function(req, res) {
+  res.json(req.user);
+};
+
+exports.userByID = function(req, res, next, id) {
+  User.findOne({
+      _id: id
+    },
+    function(err, user) {
+      if (err) {
+        return next(err);
+      }
+      else {
+        req.user = user;
+        next();
+      }
+    }
+  );
+};
+
+exports.update = function(req, res, next) {
+  User.findByIdAndUpdate(req.user.id, req.body, function(err, user) {
+    if (err) {
+      return next(err);
+    }
+    else {
+      res.json(user);
+    }
+  });
+};
+
+exports.delete = function(req, res, next) {
+  req.user.remove(function(err) {
+    if (err) {
+      return next(err);
+    }
+    else {
+      res.json(req.user);
+    }
+  })
+};
+```
+
+- In the routes/users.server.routes.js file add the following code:
+```javascript
+var users = require('../../app/controllers/users.server.controller');
+
+module.exports = function(app) {
+  app.route('/users').post(users.create).get(users.list);
+  app.route('/users/:userId').get(users.read).put(users.update).delete(users.delete);
+  app.param('userId', users.userByID);
+};
+```
 
 
+- In the x file add the following code:
+```javascript
+
+```
 
 
+- In the x file add the following code:
+```javascript
+
+```
 
 
+- In the x file add the following code:
+```javascript
 
+```
+
+
+- In the x file add the following code:
+```javascript
+
+```
+
+
+- In the x file add the following code:
+```javascript
+
+```
+
+
+- In the x file add the following code:
+```javascript
+
+```
 
 
 
