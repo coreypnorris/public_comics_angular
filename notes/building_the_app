@@ -1,4 +1,4 @@
-Build a basic CRUD app with a User model and authentication in MEAN
+Build a basic CRUD app with a User model and Passport authentication in MEAN
 =====
 
 Create the following folders & files:
@@ -14,10 +14,15 @@ Create the following folders & files:
 - ./app/routes/users.server.routes.js
 - ./app/views/
 - ./app/views/index.ejs
+- ./app/views/login.ejs
+- ./app/views/register.ejs
 - ./config/config.js
 - ./config/mongoose.js
 - ./config/env/
 - ./config/env/development.js
+- ./config/strategies/
+- ./config/strategies/local.js
+- ./config/strategies/passport.js
 - ./config/express.js
 - ./public/css/
 - ./public/img/
@@ -32,17 +37,20 @@ Instructions:
 -----
 - Run `npm init` to create the package.json file. When it asks for an entry point, enter server.js instead of index.js.
 
-- Run `npm install connect ejs express mongoose body-parser --save`
+- Run `npm install connect ejs express mongoose body-parser passport passport-local connect-flash express-session --save`
 
 - In the server.js file add the following code:
+
 ```javascript
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 var config = require('./config/config'),
   mongoose = require('./config/mongoose'),
   express = require('./config/express'),
+  passport = require('./config/passport'),
   db = mongoose(),
-  app = express();
+  app = express(),
+  passport = passport();
 
 app.listen(config.port);
 
@@ -51,15 +59,18 @@ console.log(process.env.NODE_ENV  + ' server running at http://localhost:' + con
 ```
 
 - In the index.server.controller.js file add the following code:
+
 ```javascript
 exports.render = function(req, res) {
   res.render('index', {
-    title: 'Howdy World'
-  })
+    title: 'MEAN MVC',
+    user: req.user ? req.user.username : ''
+  });
 };
 ```
 
 - In the index.server.routes.js file add the following code:
+
 ```javascript
 module.exports = function(app) {
   var index = require('../controllers/index.server.controller');
@@ -68,10 +79,14 @@ module.exports = function(app) {
 ```
 
 - In the config/express.js file add the following code:
+
 ```javascript
 var config = require('./config'),
   express = require('express'),
-  bodyParser = require('body-parser');
+  bodyParser = require('body-parser'),
+  passport = require('passport');
+  flash = require('connect-flash');
+  session = require('express-session');
 
 module.exports = function() {
   var app = express();
@@ -81,9 +96,18 @@ module.exports = function() {
   }));
 
   app.use(bodyParser.json());
+  app.use(flash());
 
   app.set('views', './app/views');
   app.set('view engine', 'ejs');
+
+  app.use(passport.initialize());
+  app.use(passport.session());
+  app.use(session({
+    saveUninitialized: true,
+    resave: true,
+    secret: 'OurSuperSecretCookieSecret'
+  }));
 
   require('../app/routes/index.server.routes.js')(app);
   require('../app/routes/users.server.routes.js')(app);
@@ -95,6 +119,7 @@ module.exports = function() {
 ```
 
 - In the app/views/index.ejs file add the following code:
+
 ```html
 <!DOCTYPE html>
 <html>
@@ -103,12 +128,21 @@ module.exports = function() {
 </head>
 
 <body>
-    <h1><%= title %></h1>
+  <div class="container">
+    <% if ( user ) { %>
+      <h2>Hello <%=user%> </h2>
+      <a href="/logout">Logout</a>
+    <% } else { %>
+      <a href="/register">Register</a>
+      <a href="/login">Login</a>
+    <% } %>
+  </div><!-- container -->
 </body>
 </html>
 ```
 
 - In the config/env/development.js file add the following code:
+
 ```javascript
 var port = 1337;
 
@@ -119,6 +153,7 @@ module.exports = {
 ```
 
 - In the config/mongoose.js file add the following code:
+
 ```javascript
 var config = require('./config'),
   mongoose = require('mongoose');
@@ -131,6 +166,7 @@ module.exports = function() {
 ```
 
 - In the config/config.js file add the following code:
+
 ```javascript
 module.exports = require('./env/' + process.env.NODE_ENV + '.js');
 ```
@@ -138,91 +174,155 @@ module.exports = require('./env/' + process.env.NODE_ENV + '.js');
 - Run `export NODE_ENV=development`
 
 - In the models/user.server.model.js file add the following code:
+
 ```javascript
 var mongoose = require('mongoose'),
+  crypto = require('crypto'),
   Schema = mongoose.Schema;
 
 var UserSchema = new Schema({
   name: String,
   email: String,
-  username: String,
+  username: {
+    type: String,
+    trim: true,
+    unique: true
+  },
   password: String,
+  provider: String,
+  providerId: String,
+  providerData: {},
+  todos: {}//we will use this in the next tutorial to store TODOs
 });
 
-mongoose.model('User', UserSchema);
-```
-
-- In the ./app/controllers/users.server.controller.js file add the following code:
-```javascript
-var User = require('mongoose').model('User');
-
-exports.create = function(req, res, next) {
-  var user = new User(req.body);
-  user.save(function(err) {
-    if (err) {
-      return next(err);
+UserSchema.pre('save',
+  function(next) {
+    if (this.password) {
+      var md5 = crypto.createHash('md5');
+      this.password = md5.update(this.password).digest('hex');
     }
-    else {
-      res.json(user);
-    }
-  });
+
+    next();
+  }
+);
+
+UserSchema.methods.authenticate = function(password) {
+  var md5 = crypto.createHash('md5');
+  md5 = md5.update(password).digest('hex');
+
+  return this.password === md5;
 };
 
-exports.list = function(req, res, next) {
-  User.find({}, function(err, users) {
-    if (err) {
-      return next(err);
-    }
-    else {
-      res.json(users);
-    }
-  });
-};
+UserSchema.statics.findUniqueUsername = function(username, suffix, callback) {
+  var _this = this;
+  var possibleUsername = username + (suffix || '');
 
-exports.read = function(req, res) {
-  res.json(req.user);
-};
-
-exports.userByID = function(req, res, next, id) {
-  User.findOne({
-      _id: id
-    },
+  _this.findOne(
+    {username: possibleUsername},
     function(err, user) {
-      if (err) {
-        return next(err);
+      if (!err) {
+        if (!user) {
+          callback(possibleUsername);
+        }
+        else {
+          return _this.findUniqueUsername(username, (suffix || 0) + 1, callback);
+        }
       }
       else {
-        req.user = user;
-        next();
+        callback(null);
       }
     }
   );
 };
 
-exports.update = function(req, res, next) {
-  User.findByIdAndUpdate(req.user.id, req.body, function(err, user) {
-    if (err) {
-      return next(err);
+mongoose.model('User', UserSchema);
+```
+
+- In the ./app/controllers/users.server.controller.js file add the following code:
+
+```javascript
+var User = require('mongoose').model('User'),
+  passport = require('passport');
+
+var getErrorMessage = function(err) {
+  var message = '';
+  if (err.code) {
+    switch (err.code) {
+      case 11000:
+      case 11001:
+        message = 'Username already exists';
+        break;
+      default:
+        message = 'Something went wrong';
     }
-    else {
-      res.json(user);
+  }
+  else {
+    for (var errName in err.errors) {
+      if (err.errors[errName].message)
+        message = err.errors[errName].message;
     }
-  });
+  }
+
+  return message;
 };
 
-exports.delete = function(req, res, next) {
-  req.user.remove(function(err) {
-    if (err) {
-      return next(err);
-    }
-    else {
-      res.json(req.user);
-    }
-  })
+exports.renderLogin = function(req, res, next) {
+  if (!req.user) {
+    res.render('login', {
+      title: 'Log-in Form',
+      messages: req.flash('error') || req.flash('info')
+    });
+  }
+  else {
+    return res.redirect('/');
+  }
+};
+
+exports.renderRegister = function(req, res, next) {
+  if (!req.user) {
+    res.render('register', {
+      title: 'Register Form',
+      messages: req.flash('error')
+    });
+  }
+  else {
+    return res.redirect('/');
+  }
+};
+
+exports.register = function(req, res, next) {
+  if (!req.user) {
+    var user = new User(req.body);
+    var message = null;
+    user.provider = 'local';
+    user.save(function(err) {
+      if (err) {
+        var message = getErrorMessage(err);
+        req.flash('error', message);
+        return res.redirect('/register');
+      }
+
+      req.login(user, function(err) {
+        if (err)
+          return next(err);
+
+        return res.redirect('/');
+      });
+    });
+  }
+  else {
+    return res.redirect('/');
+  }
+};
+
+exports.logout = function(req, res) {
+  req.logout();
+  res.redirect('/');
 };
 ```
 
 - In the routes/users.server.routes.js file add the following code:
+
 ```javascript
 var users = require('../../app/controllers/users.server.controller');
 
@@ -230,41 +330,178 @@ module.exports = function(app) {
   app.route('/users').post(users.create).get(users.list);
   app.route('/users/:userId').get(users.read).put(users.update).delete(users.delete);
   app.param('userId', users.userByID);
+  app.route('/register')
+    .get(users.renderRegister)
+    .post(users.register);
+
+  app.route('/login').get(users.renderLogin).post(passport.authenticate('local', {
+    successRedirect: '/',
+    failureRedirect: '/login',
+    failureFlash: true
+  }));
+
+  app.get('/logout', users.logout);
 };
 ```
 
 
+- In the strategies/local.js file add the following code:
+
+```javascript
+var passport = require('passport'),
+  LocalStrategy = require('passport-local').Strategy,
+  User = require('mongoose').model('User');
+
+module.exports = function() {
+  passport.use(new LocalStrategy(function(username, password, done) {
+    User.findOne(
+      {username: username},
+      function(err, user) {
+        if (err) {
+          return done(err);
+        }
+
+        if (!user) {
+          return done(null, false, {message: 'Unknown user'});
+        }
+
+        if (!user.authenticate(password)) {
+          return done(null, false, {message: 'Invalid password'});
+        }
+
+        return done(null, user);
+      }
+    );
+  }));
+};
+```
+
+
+- In the strategies/passport.js file add the following code:
+
+```javascript
+var passport = require('passport'),
+  mongoose = require('mongoose');
+
+module.exports = function() {
+  var User = mongoose.model('User');
+
+  passport.serializeUser(function(user, done) {
+    done(null, user.id);
+  });
+
+  passport.deserializeUser(function(id, done) {
+    User.findOne(
+      {_id: id},
+      '-password',
+      function(err, user) {
+        done(err, user);
+      }
+    );
+  });
+
+  require('./strategies/local.js')();
+};
+```
+
+
+- In the views/login.ejs file add the following code:
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= title %></title>
+  <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="http://getbootstrap.com/examples/signin/signin.css" rel="stylesheet">
+</head>
+<body>
+  <% for(var i in messages) { %>
+    <div class="flash"><%= messages[i] %></div>
+  <% } %>
+
+  <div class="container">
+    <form class="form-signin" action="/login" method="post">
+      <h2 class="form-signin-heading text-center">Open, says me</h2>
+
+      <label for="username" class="sr-only">Username</label>
+      <input type="text" name="username" id="username" class="form-control" placeholder="Username" required autofocus>
+
+      <label for="password" class="sr-only">Password</label>
+      <input type="password" name="password" id="password" class="form-control" placeholder="Password">
+
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+    </form>
+
+    <div class="row">
+      <div class="center-block text-center">
+        <a href="/oauth/facebook">Login with Facebook</a> |
+        <a href="/oauth/twitter">Login with Twitter</a>
+      </div>
+    </div>
+  </div><!-- container -->
+</body>
+</html>
+```
+
+
+- In the views/register.ejs file add the following code:
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%=title %></title>
+
+  <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="http://getbootstrap.com/examples/signin/signin.css" rel="stylesheet">
+</head>
+<body>
+  <% for(var i in messages) { %>
+    <div class="flash"><%= messages[i] %></div>
+  <% } %>
+
+  <div class="container">
+    <form class="form-signin" action="/register" method="post">
+      <h2 class="form-signin-heading text-center">Register</h2>
+
+      <label for="username" class="sr-only">Username</label>
+      <input type="text" id="username" name="username" class="form-control" placeholder="Username" required autofocus>
+
+      <label for="name" class="sr-only">Name</label>
+      <input type="text" id="name" name="name" class="form-control" placeholder="Name" required autofocus>
+
+      <label for="email" class="sr-only">E-mail</label>
+      <input type="email" id="email" name="email" class="form-control" placeholder="E-mail" required>
+
+      <label for="password" class="sr-only">Password</label>
+      <input type="password" name="password" id="password" class="form-control" placeholder="Password" required>
+
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+    </form>
+
+    <div class="row">
+      <div class="center-block text-center">
+        <a href="/oauth/facebook">Login with Facebook</a> |
+        <a href="/oauth/twitter">Login with Twitter</a>
+      </div>
+    </div>
+  </div><!-- container -->
+</body>
+</html>
+
+```
+
+
 - In the x file add the following code:
+
 ```javascript
 
 ```
 
 
 - In the x file add the following code:
-```javascript
 
-```
-
-
-- In the x file add the following code:
-```javascript
-
-```
-
-
-- In the x file add the following code:
-```javascript
-
-```
-
-
-- In the x file add the following code:
-```javascript
-
-```
-
-
-- In the x file add the following code:
 ```javascript
 
 ```
