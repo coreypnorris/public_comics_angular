@@ -1,8 +1,9 @@
 var config = require('./config'),
   express = require('express'),
   bodyParser = require('body-parser'),
-  passport = require('passport');
-  flash = require('connect-flash');
+  passport = require('passport'),
+  flash = require('connect-flash'),
+  session = require('express-session');
 
 module.exports = function() {
   var app = express();
@@ -19,6 +20,12 @@ module.exports = function() {
 
   app.use(passport.initialize());
   app.use(passport.session());
+
+  app.use(session({
+    saveUninitialized: true,
+    resave: true,
+    secret: 'OurSuperSecretCookieSecret'
+  }));
 
   require('../app/routes/index.server.routes.js')(app);
   require('../app/routes/users.server.routes.js')(app);

@@ -1,4 +1,5 @@
-var users = require('../../app/controllers/users.server.controller');
+var users = require('../../app/controllers/users.server.controller'),
+  passport = require('passport');
 
 module.exports = function(app) {
   app.route('/users').post(users.create).get(users.list);
