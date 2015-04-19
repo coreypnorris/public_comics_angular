@@ -1,0 +1,11 @@
+﻿<div ng-controller="HomeStateCtrl">
+    {{ greeting }}
+</div>
+
+<div ng-repeat="comic in comics">
+    <h1>{{comic.title_name}}</h1>
+    <h6>{{comic.uploaded_at | date: 'MMM d, y' : 'UTC'}}</h6>
+    <div ng-repeat="page in comic.pages">
+        <img ng-src="{{page}}" />
+    </div>
+</div>

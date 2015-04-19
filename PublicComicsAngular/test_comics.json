@@ -1,0 +1,12 @@
+﻿[
+    //comic_1
+    {
+        "id": 1,
+        "title_name": "Captain Marvel Adventures",
+        "title_id": 1,
+        "user_id": 1,
+        "pages": [ 
+            "images/0.jpg"
+        ]
+    }
+]

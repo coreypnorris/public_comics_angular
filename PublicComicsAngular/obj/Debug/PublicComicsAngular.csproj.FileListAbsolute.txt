@@ -1,0 +1,6 @@
+C:\Users\corey_000\Documents\Code\PublicComicsAngular\PublicComicsAngular\bin\PublicComicsAngular.dll.config
+C:\Users\corey_000\Documents\Code\PublicComicsAngular\PublicComicsAngular\bin\PublicComicsAngular.dll
+C:\Users\corey_000\Documents\Code\PublicComicsAngular\PublicComicsAngular\bin\PublicComicsAngular.pdb
+C:\Users\corey_000\Documents\Code\PublicComicsAngular\PublicComicsAngular\obj\Debug\PublicComicsAngular.csprojResolveAssemblyReference.cache
+C:\Users\corey_000\Documents\Code\PublicComicsAngular\PublicComicsAngular\obj\Debug\PublicComicsAngular.dll
+C:\Users\corey_000\Documents\Code\PublicComicsAngular\PublicComicsAngular\obj\Debug\PublicComicsAngular.pdb
