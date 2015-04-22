@@ -8,11 +8,16 @@
     <script src="Scripts/angular-ui/ui-bootstrap.min.js"></script>
     <!--css files-->
     <link href="Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="Content/normalize.css" rel="stylesheet" />
+    <link href="Content/bootstrap.cyborg.min.css" rel="stylesheet" />
+    <link href="Content/custom_styles.css" rel="stylesheet" />
     <title>Public Comics</title>
 </head>
 <body ng-app="app">
     <div class="container">
-        <div ui-view></div>
+        <div class="main-content">
+            <div ui-view></div>
+        </div>
     </div>
 </body>
 </html>

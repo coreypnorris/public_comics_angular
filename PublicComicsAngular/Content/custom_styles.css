@@ -1,0 +1,39 @@
+﻿.main-content {
+    margin: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 85%;
+}
+
+.navbar-search-input {
+    width: 160% !important;
+}
+
+.home-vintage-text {
+    font-family: Helvetica, sans-serif;
+}
+
+.home-vintage-image {
+    width: 675px;
+    height:400px;
+}
+
+.home-issue-cover {
+    width: 220px;
+    height: 330px;
+}
+
+.home-issue-title {
+    font-size: 300%;
+}
+
+.home-issue-preview-pages {
+    float: left;
+    margin-top: 60px;
+    color: whitesmoke;
+}
+
+.home-issue-preview-page {
+    width: 110px;
+    height: 150px;
+}

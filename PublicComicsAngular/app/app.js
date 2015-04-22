@@ -18,14 +18,12 @@ app.config(function ($stateProvider, $urlRouterProvider) {
 var HomeStateCtrl = function ($scope) {
     $scope.comics = [    
         {
-            "id": 1,
-            "title_name": "Captain Marvel Adventures",
-            "title_id": 1,
-            "user_id": 1,
+            "title": "Captain Midnight #24",
+            "uploader": "admin",
             "created_at": 1288323623006,
             "uploaded_at": 1429480382,
+            "cover": "images/0.jpg",
             "pages": [
-                "images/0.jpg",
                 "images/1.jpg",
                 "images/2.jpg",
                 "images/3.jpg",
@@ -36,6 +34,35 @@ var HomeStateCtrl = function ($scope) {
                 "images/8.jpg",
                 "images/9.jpg",
                 "images/10.jpg"
+            ],
+            "tags": [
+                "Superhero",
+                "Fawcett",
+                "1944"
+            ]
+        },
+        {
+            "title": "Captain Midnight #24",
+            "uploader": "admin",
+            "created_at": 1288323623006,
+            "uploaded_at": 1429480382,
+            "cover": "images/0.jpg",
+            "pages": [
+                "images/1.jpg",
+                "images/2.jpg",
+                "images/3.jpg",
+                "images/4.jpg",
+                "images/5.jpg",
+                "images/6.jpg",
+                "images/7.jpg",
+                "images/8.jpg",
+                "images/9.jpg",
+                "images/10.jpg"
+            ],
+            "tags": [
+                "Superhero",
+                "Fawcett",
+                "1944"
             ]
         }
     ];
