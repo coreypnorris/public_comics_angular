@@ -1,29 +1,12 @@
-﻿<nav class="navbar navbar-default main-navbar">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="true">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/">Public Comics</a>
-        </div>
-
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            
-            <form class="navbar-form navbar-left" role="search">
-                <div class="form-group">
-                    <input type="text" class="form-control navbar-search-input" placeholder="Search by title, issue, or tag">
-                </div>
-            </form>
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">Upload A Comic</a></li>
-                <li><a href="#">Login</a></li>
-            </ul>
-        </div>
+﻿<div class="row">
+    <div class="col-lg-9">
+        <form class="navbar-form navbar-left main-searchbar" role="search">
+            <div class="form-group">
+                <input type="text" class="form-control navbar-search-input" placeholder="Search by title, issue, or tag">
+            </div>
+        </form>
     </div>
-</nav>
+</div>
 
 <br />
 
@@ -56,6 +39,12 @@
 
 <hr />
 
+<div class="row">
+    <div class="col-lg-12 home-pagination">
+        <pagination boundary-links="true" total-items="totalItems" ng-model="currentPage" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+    </div>
+</div>
+
 <div ng-repeat="comic in comics">
     <div class="row">
         <div class="col-lg-12">
@@ -65,15 +54,12 @@
                         <a href="#"><img class="home-issue-cover" ng-src="{{comic.cover}}" /></a>
                     </div>
                     <div class="col-lg-9">
-                        <h3><a href="#">{{comic.title}}</a></h3>
+                        <h3 class="comic-title"><a href="#">{{comic.title}} #{{comic.number}}</a></h3>
+                        <p>Uploaded on: {{comic.uploaded_at | date: 'MMM d, y' : 'UTC'}}</p>
                         <span ng-repeat="tag in comic.tags">
                             <a href="#" class="btn btn-default btn-xs">{{tag}}</a>
                         </span>
                         <div class="home-issue-preview-pages" style="float:left;">
-                            <p>
-                                Uploaded on: {{comic.uploaded_at | date: 'MMM d, y' : 'UTC'}}
-                                by <a href="#">{{comic.uploader}}</a>
-                            </p>
                             <span ng-repeat="page in comic.pages | limitTo: 6">
                                 <a href="#"><img class="home-issue-preview-page" ng-src="{{page}}" /></a>
                             </span>
@@ -82,5 +68,11 @@
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12 home-pagination">
+        <pagination boundary-links="true" total-items="totalItems" ng-model="currentPage" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
     </div>
 </div>

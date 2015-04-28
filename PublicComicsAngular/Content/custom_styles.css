@@ -29,7 +29,7 @@
 
 .home-issue-preview-pages {
     float: left;
-    margin-top: 60px;
+    margin-top: 81px;
     color: whitesmoke;
 }
 
@@ -44,4 +44,12 @@
 
 .slick-dots li button:before {
     color: whitesmoke;
+}
+
+.comic-title {
+    margin-top: 0px;
+}
+
+.main-searchbar {
+    padding: 0px;
 }

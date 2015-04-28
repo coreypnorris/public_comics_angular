@@ -45,3 +45,7 @@
 .slick-dots li button:before {
     color: whitesmoke;
 }
+
+.home-pagination {
+    text-align: center;
+}
