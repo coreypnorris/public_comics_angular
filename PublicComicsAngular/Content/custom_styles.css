@@ -6,7 +6,7 @@
 }
 
 .navbar-search-input {
-    width: 160% !important;
+    width: 220% !important;
 }
 
 .home-vintage-text {
@@ -29,7 +29,7 @@
 
 .home-issue-preview-pages {
     float: left;
-    margin-top: 81px;
+    margin-top: 16px;
     color: whitesmoke;
 }
 
@@ -52,4 +52,14 @@
 
 .main-searchbar {
     padding: 0px;
+}
+
+.comic-stats-list {
+    list-style: none;
+    padding: 0px;
+    margin-top: 15px;
+}
+
+.comic-stats-list .badge {
+    background-color: #424242;
 }

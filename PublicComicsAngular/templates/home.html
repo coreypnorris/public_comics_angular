@@ -50,9 +50,15 @@
                     <div class="col-lg-9">
                         <h3 class="comic-title"><a href="#">{{comic.title}} #{{comic.number}}</a></h3>
                         <p>Uploaded on: {{comic.uploaded_at | date: 'MMM d, y' : 'UTC'}}</p>
-                        <span ng-repeat="tag in comic.tags">
-                            <a href="#" class="btn btn-default btn-xs">{{tag}}</a>
-                        </span>
+                        <div>
+                            <span ng-repeat="tag in comic.tags">
+                                <a href="#" class="btn btn-default btn-xs">{{tag}}</a>
+                            </span>
+                        </div>
+                        <ul class="comic-stats-list">
+                            <li><a href="#">Pages </a><span class="badge">{{comic.pages.length}}</span></li>
+                            <li><a href="#">Comments </a><span class="badge">4</span></li>
+                        </ul>
                         <div class="home-issue-preview-pages" style="float:left;">
                             <span ng-repeat="page in comic.pages | limitTo: 6">
                                 <a href="#"><img class="home-issue-preview-page" ng-src="{{page}}" /></a>

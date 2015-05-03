@@ -49,3 +49,13 @@
 .home-pagination {
     text-align: center;
 }
+
+.comic-stats-list {
+    list-style: none;
+    padding: 0px;
+    margin-top: 15px;
+}
+
+.comic-stats-list .badge {
+    background-color: #424242;
+}
