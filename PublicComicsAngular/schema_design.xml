@@ -38,7 +38,7 @@
       <type label="Bit" length="0" sql="bit" quote=""/>
     </group>
   </datatypes>
-  <table x="104" y="172" name="comics">
+  <table x="104" y="172" name="issues">
     <row name="id" null="1" autoincrement="1">
       <datatype>INTEGER</datatype>
       <default>NULL</default>
@@ -61,10 +61,10 @@
       <datatype>INTEGER</datatype>
       <default>NULL</default>
     </row>
-    <row name="comic_id" null="1" autoincrement="0">
+    <row name="issue_id" null="1" autoincrement="0">
       <datatype>INTEGER</datatype>
       <default>NULL</default>
-      <relation table="comics" row="id" />
+      <relation table="issues" row="id" />
     </row>
     <key type="PRIMARY" name="">
       <part>id</part>
@@ -83,8 +83,12 @@
       <part>id</part>
     </key>
   </table>
-  <table x="306" y="185" name="comments">
+  <table x="408" y="169" name="comments">
     <row name="id" null="1" autoincrement="1">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="body" null="1" autoincrement="0">
       <datatype>INTEGER</datatype>
       <default>NULL</default>
     </row>
@@ -96,7 +100,7 @@
       <part>id</part>
     </key>
   </table>
-  <table x="308" y="52" name="commentings">
+  <table x="406" y="55" name="commentings">
     <row name="id" null="1" autoincrement="1">
       <datatype>INTEGER</datatype>
       <default>NULL</default>
@@ -110,6 +114,24 @@
       <datatype>INTEGER</datatype>
       <default>NULL</default>
       <relation table="comments" row="id" />
+    </row>
+    <key type="PRIMARY" name="">
+      <part>id</part>
+    </key>
+  </table>
+  <table x="256" y="52" name="tags">
+    <row name="id" null="1" autoincrement="1">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="body" null="1" autoincrement="0">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="issue_id" null="1" autoincrement="0">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+      <relation table="issues" row="id" />
     </row>
     <key type="PRIMARY" name="">
       <part>id</part>
