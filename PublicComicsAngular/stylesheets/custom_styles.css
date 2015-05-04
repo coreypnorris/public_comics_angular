@@ -6,7 +6,7 @@
 }
 
 .navbar-search-input {
-    width: 100% !important;
+    width: 220% !important;
 }
 
 .home-vintage-text {
@@ -29,7 +29,7 @@
 
 .home-issue-preview-pages {
     float: left;
-    margin-top: 60px;
+    margin-top: 16px;
     color: whitesmoke;
 }
 
@@ -46,8 +46,12 @@
     color: whitesmoke;
 }
 
-.home-pagination {
-    text-align: center;
+.comic-title {
+    margin-top: 0px;
+}
+
+.main-searchbar {
+    padding: 0px;
 }
 
 .comic-stats-list {
@@ -58,4 +62,20 @@
 
 .comic-stats-list .badge {
     background-color: #424242;
+}
+
+.home-pagination {
+    text-align: center;
+}
+
+.comic-stats-badge {
+    margin-left: 2px;
+}
+
+@media (max-width: 768px) {
+    .navbar-search-input {
+        width: 100% !important;
+    }
+
+    
 }

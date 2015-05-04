@@ -56,8 +56,8 @@
                             </span>
                         </div>
                         <ul class="comic-stats-list">
-                            <li><a href="#">Pages </a><span class="badge">{{comic.pages.length}}</span></li>
-                            <li><a href="#">Comments </a><span class="badge">4</span></li>
+                            <li><a href="#">Pages </a><span class="comic-stats-badge badge">{{comic.pages.length}}</span></li>
+                            <li><a href="#">Comments </a><span class="comic-stats-badge badge">4</span></li>
                         </ul>
                         <div class="home-issue-preview-pages" style="float:left;">
                             <span ng-repeat="page in comic.pages | limitTo: 6">
