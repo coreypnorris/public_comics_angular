@@ -1,4 +1,4 @@
-﻿var app = angular.module("app", ['ui.router', 'ui.bootstrap']);
+﻿var app = angular.module("app", ['ui.router', 'ui.bootstrap', 'dropzone']);
 app.config(function ($stateProvider, $urlRouterProvider) {
     $stateProvider
         .state('home', {
@@ -11,12 +11,17 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             controller: 'UploadStateCtrl',
             templateUrl: 'templates/upload.html'
         });
-
     $urlRouterProvider.otherwise('/home');
 });
 
+app.run(function($rootScope) {
+    $rootScope.$on('$stateChangeSuccess', function() {
+        $("html, body").animate({ scrollTop: 0 }, 200);
+    });
+});
+
 // Home State Scripts
-var HomeStateCtrl = function ($scope, $log) {
+app.controller('HomeStateCtrl', ['$scope', function ($scope) {
     $scope.totalItems = 64;
     $scope.currentPage = 1;
 
@@ -99,11 +104,25 @@ var HomeStateCtrl = function ($scope, $log) {
             ]
         }
     ];
-};
+}]);
 
 // Upload State Scripts
-var UploadStateCtrl = function($scope, $log) {
+app.controller('UploadStateCtrl', ['$scope', function ($scope) {
     $scope.comicNumbers = Array.range(0, 1000);
+
+    $scope.dropzoneConfig = {
+        'options': { // passed into the Dropzone constructor
+            'url': 'https://www.google.com'
+        },
+        'eventHandlers': {
+            'sending': function (file, xhr, formData) {
+            },
+            'success': function (file, response) {
+
+            }
+        }
+    };
+
     $scope.submitForm = function () {
         
     };
@@ -111,8 +130,7 @@ var UploadStateCtrl = function($scope, $log) {
     $scope.cancelForm = function () {
 
     };
-}
-
+}]);
 
 // Helper Methods
 Array.range = function (a, b, step) {
@@ -135,3 +153,19 @@ Array.range = function (a, b, step) {
     }
     return A;
 }
+
+angular.module('dropzone', []).directive('dropzone', function () {
+    return function (scope, element, attrs) {
+        var config, dropzone;
+
+        config = scope[attrs.dropzone];
+
+        // create a Dropzone for the element with the given options
+        dropzone = new Dropzone(element[0], config.options);
+
+        // bind the given event handlers
+        angular.forEach(config.eventHandlers, function (handler, event) {
+            dropzone.on(event, handler);
+        });
+    };
+});
