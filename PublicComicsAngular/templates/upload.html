@@ -1,1 +1,23 @@
-﻿
+﻿<form class="form-horizontal">
+    <fieldset>
+        <legend>Upload a new comic</legend>
+        <div class="form-group">
+            <label for="newComicInputTitle" class="col-lg-2 control-label">Title</label>
+            <div class="col-lg-10">
+                <input ng-model="newComic.title" type="text" class="form-control" id="newComicInputTitle" placeholder="Title" autocomplete="on" style="cursor: pointer; background-attachment: scroll; background-position: 100% 50%; background-repeat: no-repeat;">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="newComicInputNumber" class="col-lg-2 control-label">Number</label>
+            <div class="col-lg-10">
+                <select class="form-control" id="newComicInputNumber" ng-model="newComic.number" ng-options="number for number in comicNumbers" ng-init="newComic.number = comicNumbers[1]"></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-lg-10 col-lg-offset-2">
+                <button type="reset" class="btn btn-default" ng-click="cancelForm()">Cancel</button>
+                <button type="submit" class="btn btn-primary" ng-click="submitForm()">Submit</button>
+            </div>
+        </div>
+    </fieldset>
+</form>
