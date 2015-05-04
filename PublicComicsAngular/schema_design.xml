@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<!-- SQL XML created by WWW SQL Designer, http://code.google.com/p/wwwsqldesigner/ -->
+<!-- SQL XML created by WWW SQL Designer, https://github.com/ondras/wwwsqldesigner/ -->
 <!-- Active URL: http://ondras.zarovi.cz/sql/demo/ -->
 <sql>
   <datatypes db="mysql">
@@ -38,36 +38,7 @@
       <type label="Bit" length="0" sql="bit" quote=""/>
     </group>
   </datatypes>
-  <table x="302" y="51" name="users">
-    <row name="id" null="1" autoincrement="1">
-      <datatype>INTEGER</datatype>
-      <default>NULL</default>
-    </row>
-    <row name="email" null="1" autoincrement="0">
-      <datatype>INTEGER</datatype>
-      <default>NULL</default>
-    </row>
-    <row name="username" null="1" autoincrement="0">
-      <datatype>INTEGER</datatype>
-      <default>NULL</default>
-    </row>
-    <row name="password" null="1" autoincrement="0">
-      <datatype>INTEGER</datatype>
-      <default>NULL</default>
-    </row>
-    <row name="password_question" null="1" autoincrement="0">
-      <datatype>INTEGER</datatype>
-      <default>NULL</default>
-    </row>
-    <row name="admin" null="1" autoincrement="0">
-      <datatype>INTEGER</datatype>
-      <default>NULL</default>
-    </row>
-    <key type="PRIMARY" name="">
-      <part>id</part>
-    </key>
-  </table>
-  <table x="102" y="150" name="comics">
+  <table x="104" y="172" name="comics">
     <row name="id" null="1" autoincrement="1">
       <datatype>INTEGER</datatype>
       <default>NULL</default>
@@ -77,16 +48,15 @@
       <default>NULL</default>
       <relation table="titles" row="id" />
     </row>
-    <row name="user_id" null="1" autoincrement="0">
+    <row name="number" null="1" autoincrement="0">
       <datatype>INTEGER</datatype>
       <default>NULL</default>
-      <relation table="users" row="id" />
     </row>
     <key type="PRIMARY" name="">
       <part>id</part>
     </key>
   </table>
-  <table x="101" y="302" name="pages">
+  <table x="104" y="53" name="pages">
     <row name="id" null="1" autoincrement="1">
       <datatype>INTEGER</datatype>
       <default>NULL</default>
@@ -100,8 +70,12 @@
       <part>id</part>
     </key>
   </table>
-  <table x="103" y="53" name="titles">
+  <table x="103" y="305" name="titles">
     <row name="id" null="1" autoincrement="1">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="name" null="1" autoincrement="0">
       <datatype>INTEGER</datatype>
       <default>NULL</default>
     </row>
@@ -109,21 +83,20 @@
       <part>id</part>
     </key>
   </table>
-  <table x="301" y="253" name="comments">
+  <table x="306" y="185" name="comments">
     <row name="id" null="1" autoincrement="1">
       <datatype>INTEGER</datatype>
       <default>NULL</default>
     </row>
-    <row name="user_id" null="1" autoincrement="0">
+    <row name="by" null="1" autoincrement="0">
       <datatype>INTEGER</datatype>
       <default>NULL</default>
-      <relation table="users" row="id" />
     </row>
     <key type="PRIMARY" name="">
       <part>id</part>
     </key>
   </table>
-  <table x="502" y="51" name="commentings">
+  <table x="308" y="52" name="commentings">
     <row name="id" null="1" autoincrement="1">
       <datatype>INTEGER</datatype>
       <default>NULL</default>
@@ -131,7 +104,6 @@
     <row name="commentable_id" null="1" autoincrement="0">
       <datatype>INTEGER</datatype>
       <default>NULL</default>
-      <relation table="users" row="id" />
       <relation table="comments" row="id" />
     </row>
     <row name="comment_id" null="1" autoincrement="0">

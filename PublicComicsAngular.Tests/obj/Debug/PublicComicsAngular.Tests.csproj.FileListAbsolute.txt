@@ -5,3 +5,10 @@ C:\Users\corey_000\Documents\Code\PublicComicsAngular\PublicComicsAngular.Tests\
 C:\Users\corey_000\Documents\Code\PublicComicsAngular\PublicComicsAngular.Tests\obj\Debug\PublicComicsAngular.Tests.csprojResolveAssemblyReference.cache
 C:\Users\corey_000\Documents\Code\PublicComicsAngular\PublicComicsAngular.Tests\obj\Debug\PublicComicsAngular.Tests.dll
 C:\Users\corey_000\Documents\Code\PublicComicsAngular\PublicComicsAngular.Tests\obj\Debug\PublicComicsAngular.Tests.pdb
+C:\Users\corey.norris\Documents\Code\public_comics_angular\PublicComicsAngular.Tests\bin\Debug\PublicComicsAngular.Tests.dll
+C:\Users\corey.norris\Documents\Code\public_comics_angular\PublicComicsAngular.Tests\bin\Debug\PublicComicsAngular.Tests.pdb
+C:\Users\corey.norris\Documents\Code\public_comics_angular\PublicComicsAngular.Tests\bin\Debug\PublicComicsAngular.dll
+C:\Users\corey.norris\Documents\Code\public_comics_angular\PublicComicsAngular.Tests\bin\Debug\PublicComicsAngular.pdb
+C:\Users\corey.norris\Documents\Code\public_comics_angular\PublicComicsAngular.Tests\obj\Debug\PublicComicsAngular.Tests.csprojResolveAssemblyReference.cache
+C:\Users\corey.norris\Documents\Code\public_comics_angular\PublicComicsAngular.Tests\obj\Debug\PublicComicsAngular.Tests.dll
+C:\Users\corey.norris\Documents\Code\public_comics_angular\PublicComicsAngular.Tests\obj\Debug\PublicComicsAngular.Tests.pdb
