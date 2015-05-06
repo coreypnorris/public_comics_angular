@@ -1,0 +1,38 @@
+﻿<hr />
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="col-lg-3">
+                <a href="#"><img class="home-issue-cover" ng-src="{{comic.cover}}" /></a>
+            </div>
+            <div class="col-lg-9">
+                <h3 class="comic-detail-comic-title"><a ui-sref="comicDetail({ title: comic.title, number: comic.number })">{{comic.title}} #{{comic.number}}</a></h3>
+                <p>Uploaded on: {{comic.uploaded_at | date: 'MMM d, y' : 'UTC'}}</p>
+                <div>
+                    <span ng-repeat="tag in comic.tags">
+                        <a href="#" class="btn btn-default btn-xs">{{tag}}</a>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br /><br /><br />
+
+<div class="row">
+    <div class="col-lg-12">
+        <tabset justified="true">
+            <tab heading="Comments">
+                <p>Comments</p>
+            </tab>
+            <tab heading="Thumbnails">
+                <p>Thumbnails</p>
+            </tab>
+            <tab heading="Related Issues">
+                <p>Related Comics</p>
+            </tab>
+        </tabset>
+    </div>
+</div>

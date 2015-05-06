@@ -10,6 +10,11 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             url: '/upload',
             controller: 'UploadStateCtrl',
             templateUrl: 'templates/upload.html'
+        })
+        .state('comicDetail', {
+            url: '/comics/:title/:number',
+            controller: 'ComicDetailStateCtrl',
+            templateUrl: 'templates/comic_detail.html'
         });
     $urlRouterProvider.otherwise('/home');
 });
@@ -129,6 +134,44 @@ app.controller('UploadStateCtrl', ['$scope', function ($scope) {
 
     $scope.cancelForm = function () {
 
+    };
+}]);
+
+// Comic Detail State Scripts
+app.controller('ComicDetailStateCtrl', ['$scope', '$window', function ($scope, $window) {
+    $scope.comic = {"title": "Captain Midnight",
+                    "number": "24",
+                    "created_at": 1288323623006,
+                    "uploaded_at": 1429480382,
+                    "cover": "images/captain_midnight_24/0.jpg",
+                    "pages": [
+                        "images/captain_midnight_24/1.jpg",
+                        "images/captain_midnight_24/2.jpg",
+                        "images/captain_midnight_24/3.jpg",
+                        "images/captain_midnight_24/4.jpg",
+                        "images/captain_midnight_24/5.jpg",
+                        "images/captain_midnight_24/6.jpg",
+                        "images/captain_midnight_24/7.jpg",
+                        "images/captain_midnight_24/8.jpg",
+                        "images/captain_midnight_24/9.jpg",
+                        "images/captain_midnight_24/10.jpg"
+                    ],
+                    "tags": [
+                        "Superhero",
+                        "Fawcett",
+                        "1944"
+                    ]
+    };
+
+    $scope.tabs = [
+      { title: 'Dynamic Title 1', content: 'Dynamic content 1' },
+      { title: 'Dynamic Title 2', content: 'Dynamic content 2', disabled: true }
+    ];
+
+    $scope.alertMe = function () {
+        setTimeout(function () {
+            $window.alert('You\'ve selected the alert tab!');
+        });
     };
 }]);
 

@@ -72,6 +72,20 @@
     margin-left: 2px;
 }
 
+.comic-detail-comic-cover {
+    width: 315px;
+    height: 450px;
+}
+
+.comic-detail-comic-title {
+    margin-top: 0px;
+    font-size: 50px;
+}
+
+.comic-detail-comic-text {
+    font-size: 150%;
+}
+
 @media (max-width: 768px) {
     .navbar-search-input {
         width: 100% !important;
