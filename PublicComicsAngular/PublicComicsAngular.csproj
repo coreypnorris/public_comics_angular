@@ -480,6 +480,7 @@
     <Content Include="Scripts\slick-1.5.0\slick\slick.css" />
     <Content Include="Scripts\slick-1.5.0\slick\slick.js" />
     <Content Include="Scripts\slick-1.5.0\slick\slick.min.js" />
+    <Content Include="templates\comic_detail.html" />
     <Content Include="templates\home.html" />
     <Content Include="templates\partials\footer.html" />
     <Content Include="templates\partials\navbar.html" />
