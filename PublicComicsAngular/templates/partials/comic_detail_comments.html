@@ -1,0 +1,8 @@
+﻿<div class="row">
+    <div class="col-lg-12">
+        <div ng-repeat="comment in comic.comments">
+            <h6>{{comment.by}} <span class="comment-created-at">{{comment.created_at | date: "MM/dd/yyyy @ h:mma"}}</span></h6>
+            <p>{{comment.body}}</p>
+        </div>
+    </div>
+</div>

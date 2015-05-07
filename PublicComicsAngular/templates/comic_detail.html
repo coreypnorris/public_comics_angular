@@ -30,19 +30,21 @@
     </div>
 </div>
 
-<br /><br /><br />
+<br /><br />
 
 <div class="row">
     <div class="col-lg-12">
         <tabset>
             <tab heading="Comments">
-                <div class="text-center">
-                    <p>Comments go here</p>
-                </div>
+                <div ng-include data-src="'templates/partials/comic_detail_comments.html'"></div>
             </tab>
-            <tab heading="Thumbnails">
-                <div class="text-center">
-                    <p>Thumbnails go here</p>
+            <tab heading="Pages">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <span ng-repeat="page in comic.pages">
+                            <a href="#"><img class="comic-detail-thumbnail-page" ng-src="{{page}}" /></a>
+                        </span>
+                    </div>
                 </div>
             </tab>
             <tab heading="Related Issues">

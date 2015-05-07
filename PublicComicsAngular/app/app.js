@@ -145,6 +145,7 @@ app.controller('ComicDetailStateCtrl', ['$scope', '$window', function ($scope, $
                     "uploaded_at": 1429480382,
                     "cover": "images/captain_midnight_24/0.jpg",
                     "pages": [
+                        "images/captain_midnight_24/0.jpg",
                         "images/captain_midnight_24/1.jpg",
                         "images/captain_midnight_24/2.jpg",
                         "images/captain_midnight_24/3.jpg",
@@ -160,7 +161,25 @@ app.controller('ComicDetailStateCtrl', ['$scope', '$window', function ($scope, $
                         "Superhero",
                         "Fawcett",
                         "1944"
-                    ]
+                    ],
+                    "comments": [
+                        {
+                            "body": "It sucks!",
+                            "by": "supercool123",
+                            "created_at": 1288323623006,
+                            "comments": [
+                                {}
+                            ]
+                        },
+                        {
+                            "body": "It rules!",
+                            "by": "notsocool456",
+                            "created_at": 1288323623006,
+                            "comments": [
+                                {}
+                            ]
+                        }
+                    ],
     };
 
     $scope.tabs = [
