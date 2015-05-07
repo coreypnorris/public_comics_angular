@@ -212,3 +212,9 @@ angular.module('dropzone', []).directive('dropzone', function () {
         });
     };
 });
+
+app.filter('nospace', function () {
+    return function (value) {
+        return (!value) ? '' : value.replace(/ /g, '');
+    };
+});

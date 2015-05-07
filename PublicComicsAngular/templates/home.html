@@ -38,7 +38,7 @@
                         <a href="#"><img class="home-issue-cover" ng-src="{{comic.cover}}" /></a>
                     </div>
                     <div class="col-lg-9">
-                        <h3 class="comic-title"><a ui-sref="comicDetail({ title: comic.title, number: comic.number })">{{comic.title}} #{{comic.number}}</a></h3>
+                        <h3 class="comic-title"><a ui-sref="comicDetail({ title: (comic.title | nospace), number: comic.number })">{{comic.title}} #{{comic.number}}</a></h3>
                         <p>Uploaded on: {{comic.uploaded_at | date: 'MMM d, y' : 'UTC'}}</p>
                         <div>
                             <span ng-repeat="tag in comic.tags">
