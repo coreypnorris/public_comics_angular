@@ -165,18 +165,46 @@ app.controller('ComicDetailStateCtrl', ['$scope', '$window', function ($scope, $
                     "comments": [
                         {
                             "body": "It sucks!",
-                            "by": "supercool123",
+                            "by": "person_1",
                             "created_at": 1288323623006,
                             "comments": [
-                                {}
+                                {
+                                    "body": "You suck!",
+                                    "by": "person_2",
+                                    "created_at": 1288323623006,
+                                    "comments": [
+                                        {
+                                            "body": "No, YOU suck!",
+                                            "by": "person_1",
+                                            "created_at": 1288323623006,
+                                            "comments": [
+                                                {}
+                                            ]
+                                        }
+                                    ]
+                                }
                             ]
                         },
                         {
-                            "body": "It rules!",
-                            "by": "notsocool456",
+                            "body": "It was ok.",
+                            "by": "person_3",
                             "created_at": 1288323623006,
                             "comments": [
-                                {}
+                                {
+                                    "body": "Yeah, so-so",
+                                    "by": "person_4",
+                                    "created_at": 1288323623006,
+                                    "comments": [
+                                        {
+                                            "body": "Meh",
+                                            "by": "person_5",
+                                            "created_at": 1288323623006,
+                                            "comments": [
+                                                {}
+                                            ]
+                                        }
+                                    ]
+                                }
                             ]
                         }
                     ],

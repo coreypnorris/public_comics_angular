@@ -1,8 +1,14 @@
-﻿<div class="row">
+﻿<script type="text/ng-template" id="commentTree">
+    {{ comment.body }}
+    <ul ng-if="comment.comments">
+        <li ng-repeat="comment in comment.comments" ng-include="'commentTree'">
+        </li>
+    </ul>
+</script>
+<div class="row">
     <div class="col-lg-12">
-        <div ng-repeat="comment in comic.comments">
-            <h6>{{comment.by}} <span class="comment-created-at">{{comment.created_at | date: "MM/dd/yyyy @ h:mma"}}</span></h6>
-            <p>{{comment.body}}</p>
-        </div>
+        <ul>
+            <li ng-repeat="comment in comic.comments" ng-include="'commentTree'"></li>
+        </ul>  
     </div>
 </div>
